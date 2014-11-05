@@ -2,14 +2,11 @@
     "name": "momook/propel-zf-form-annotation-behavior",
     "url": "https://github.com/MOMook/propel-zf-form-annotation-behavior",
     "type" : "propel-behavior",
-    "require": {
-        "propel/propel": "~2.0@dev"
-    },
     "autoload": {
         "classmap": ["src/"]
     },
     "extra": {
-        "name": "zf-form-annotation",
-        "class": "\\momook\\propel-zf-form-annotation-behavior\\src\\ZfFormAnnotationBehavior"
+        "name": "zf_form_annotation",
+        "class": "MOMook\\Propel\\Behavior\\ZfFormAnnotationBehavior"
     }
 }
