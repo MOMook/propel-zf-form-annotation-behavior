@@ -10,5 +10,5 @@
      */
     class ZfFormAnnotationBehavior extends Behavior
     {
-
+        protected $additionalBuilders = array('MOMook\Propel\Behavior\ZfFormAnnotationBehaviorBuilder');
     }
