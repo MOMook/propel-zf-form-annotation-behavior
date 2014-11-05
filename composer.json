@@ -1,0 +1,9 @@
+{
+    "name": "momook/propel-zf-form-annotation-behavior",
+    "require": {
+        "propel/propel": "~2.0@dev"
+    },
+    "autoload": {
+        "classmap": ["src/"]
+    }
+}
