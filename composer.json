@@ -1,5 +1,6 @@
 {
     "name": "momook/propel-zf-form-annotation-behavior",
+    "url": "https://github.com/MOMook/propel-zf-form-annotation-behavior",
     "type" : "propel-behavior",
     "require": {
         "propel/propel": "~2.0@dev"
