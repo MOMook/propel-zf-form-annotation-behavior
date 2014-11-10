@@ -2,7 +2,8 @@
 
     namespace MOMook\Propel\Behavior;
 
-    use Propel\Generator\Builder\Om\AbstractOMBuilder;
+    use MOMook\Propel\Generator\Builder\Om\AbstractOMBuilder;
+    use Propel\Generator\Model\Table;
 
     /**
      * Class ZfFormAnnotationBehaviorBuilder
@@ -10,6 +11,17 @@
      */
     class ZfFormAnnotationBehaviorBuilder extends AbstractOMBuilder
     {
+        /**
+         * @param Table $table
+         *
+         * @return ZfFormAnnotationBehaviorBuilder
+         */
+        public function __construct(Table $table)
+        {
+            parent::__construct($table);
+
+            $this->setTemplateBasePath(__DIR__);
+        }
 
         /**
          * @return string
@@ -24,16 +36,12 @@
          */
         protected function addClassOpen(&$script)
         {
-            $table = $this->getTable();
-            $tableName = $table->getName();
-            $script .= "
-/**
- * Test class for Additional builder enabled on the '$tableName' table.
- *
- */
-class " . ucfirst($tableName) . "Form
-{
-";
+            $script .= $this->renderTemplate(
+                'baseFormClassOpen',
+                [
+                    'className' => ucfirst($this->getTable()->getName()) . 'Form'
+                ]
+            );
         }
 
         /**
@@ -41,21 +49,7 @@ class " . ucfirst($tableName) . "Form
          */
         protected function addClassBody(&$script)
         {
-            $table = $this->getTable();
-            $columns = $table->getColumns();
-
-            foreach ($columns as $column) {
-
-                $script .= '
-/**
- * @Annotation\Filter({"name":"StringTrim"})
- * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":255}})
- * @Annotation\Attributes({"type":"text"})
- * @Annotation\Options({"label":"Title:"})
- */
-public $' . $column->getName() . ';
-';
-            }
+            $script .= $this->renderTemplate('baseFormClassBody');
         }
 
         /**
@@ -63,7 +57,6 @@ public $' . $column->getName() . ';
          */
         protected function addClassClose(&$script)
         {
-            $script .= "
-}";
+            $script .= $this->renderTemplate('baseFormClassClose');
         }
     }
