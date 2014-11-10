@@ -15,7 +15,8 @@
          * @var array
          */
         protected $additionalBuilders = [
-            'MOMook\Propel\Behavior\ZfFormAnnotationBehaviorBuilder'
+            'MOMook\Propel\Behavior\ZfFormAnnotationBehaviorBaseBuilder',
+            'MOMook\Propel\Behavior\ZfFormAnnotationBehaviorBuilder',
         ];
 
     }

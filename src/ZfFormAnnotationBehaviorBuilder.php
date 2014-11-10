@@ -1,62 +1,51 @@
 <?php
 
-    namespace MOMook\Propel\Behavior;
+namespace MOMook\Propel\Behavior;
 
-    use MOMook\Propel\Generator\Builder\Om\AbstractOMBuilder;
-    use Propel\Generator\Model\Table;
+use Propel\Generator\Builder\Om\ExtensionObjectBuilder;
+
+/**
+ * Class ZfFormAnnotationBehaviorBuilder
+ * @package MOMook\Propel\Behavior
+ */
+class ZfFormAnnotationBehaviorBuilder extends ExtensionObjectBuilder
+{
 
     /**
-     * Class ZfFormAnnotationBehaviorBuilder
-     * @package MOMook\Propel\Behavior
+     * Returns the qualified (prefixed) classname that is being built by the current class.
+     * This method must be implemented by child classes.
+     *
+     * @return string
      */
-    class ZfFormAnnotationBehaviorBuilder extends AbstractOMBuilder
+    public function getUnprefixedClassname()
     {
-        /**
-         * @param Table $table
-         *
-         * @return ZfFormAnnotationBehaviorBuilder
-         */
-        public function __construct(Table $table)
-        {
-            parent::__construct($table);
-
-            $this->setTemplateBasePath(__DIR__);
-        }
-
-        /**
-         * @return string
-         */
-        public function getUnprefixedClassname()
-        {
-            return $this->getStubObjectBuilder()->getUnprefixedClassname() . 'Form';
-        }
-
-        /**
-         * @param string $script
-         */
-        protected function addClassOpen(&$script)
-        {
-            $script .= $this->renderTemplate(
-                'baseFormClassOpen',
-                [
-                    'className' => ucfirst($this->getTable()->getName()) . 'Form'
-                ]
-            );
-        }
-
-        /**
-         * @param string $script
-         */
-        protected function addClassBody(&$script)
-        {
-            $script .= $this->renderTemplate('baseFormClassBody');
-        }
-
-        /**
-         * @param string $script
-         */
-        protected function addClassClose(&$script)
-        {
-            $script .= $this->renderTemplate('baseFormClassClose');
-        }
+        return parent::getUnprefixedClassname() . 'Form';
     }
+
+    /**
+     * This declares the class use and returns the correct name to use (short classname, Alias, or FQCN)
+     *
+     * @param  AbstractOMBuilder $builder
+     * @param  boolean           $fqcn    true to return the $fqcn classname
+     * @return string            ClassName, Alias or FQCN
+     */
+    public function getClassNameFromBuilder($builder, $fqcn = false)
+    {
+        $suffix = 'Form';
+
+        if ($fqcn) {
+            return $builder->getFullyQualifiedClassName() . $suffix;
+        }
+
+        $namespace = $builder->getNamespace();
+        $class = $builder->getUnqualifiedClassName() . $suffix;
+
+        if (isset($this->declaredClasses[$namespace])
+            && isset($this->declaredClasses[$namespace][$class])) {
+            return $this->declaredClasses[$namespace][$class];
+        }
+
+        return $this->declareClassNamespace($class, $namespace, true);
+    }
+
+}
