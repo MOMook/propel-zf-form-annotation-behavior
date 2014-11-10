@@ -9,7 +9,7 @@
      * Class ZfFormAnnotationBehaviorBuilder
      * @package MOMook\Propel\Behavior
      */
-    class ZfFormAnnotationBehaviorBuilder extends AbstractOMBuilder
+    class ZfFormAnnotationBehaviorBaseBuilder extends AbstractOMBuilder
     {
         /**
          * @param Table $table
