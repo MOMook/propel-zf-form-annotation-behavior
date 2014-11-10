@@ -12,6 +12,11 @@ class ZfFormAnnotationBehaviorBuilder extends ExtensionObjectBuilder
 {
 
     /**
+     * Do not overwrite these stub classes if they already exist.
+     */
+    public $overwrite = false;
+
+    /**
      * Returns the qualified (prefixed) classname that is being built by the current class.
      * This method must be implemented by child classes.
      *
